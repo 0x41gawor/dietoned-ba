@@ -137,5 +137,5 @@ Identyfikacja danych jako rzeczowniki występujące w poprzednich sekcjach:
 - **dzień** - budulec diety. Dieta ma ich tyle ile liczba jej tygodni raz 6. Dzień to widok (w bazodanowym tego słowa znaczeniu) kawałka diety, który pokazuje mapowanie dań na sloty posiłkowe, tam gdzie `{week, day}` ma odpowiednie wartości. 
 - **lista zakupów** - jest to funkcja gdzie wejściowymi jest dieta oraz konkretny dzień diety (dwójka `{week, day`}). Funkcja zwraca listę składników (wraz z podziałem na kategorie zakupowe), które trzeba zakupić danego dnia według reguły biznesowej 1.
 
-<img src="img/conceptual-erd.png" style="zoom:100%">
+<img src="img/conceptual-erd.svg" style="zoom:100%">
 
