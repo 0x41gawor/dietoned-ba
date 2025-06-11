@@ -56,7 +56,7 @@ Notion bardzo "ładnie" renderuje te 3 informacje. Tu sięgam gdy przygotowywuje
 
 <img src="img/4.png" style="zoom:70%">
 
-Notion użyłem podczas **fazy planowania**, aby mieć wyrenderowane potem odpowiednie informacje podczas **fazy użytkowania**. Całość rozpocząłem od stworzenie list **dań**, które potem będe wkładał w **sloty posiłkowe**:
+Notion użyłem podczas **fazy planowania**, aby mieć wyrenderowane potem odpowiednie informacje podczas **fazy użytkowania**. Całość rozpocząłem od stworzenia list **dań**, które potem będe wkładał w **sloty posiłkowe**:
 - Main meals -> Post-Workout, Lunch
 - Breakfast -> Breakfast
 - Pre-Workout -> Pre-Workout
@@ -137,5 +137,44 @@ Identyfikacja danych jako rzeczowniki występujące w poprzednich sekcjach:
 - **dzień** - budulec diety. Dieta ma ich tyle ile liczba jej tygodni raz 6. Dzień to widok (w bazodanowym tego słowa znaczeniu) kawałka diety, który pokazuje mapowanie dań na sloty posiłkowe, tam gdzie `{week, day}` ma odpowiednie wartości. 
 - **lista zakupów** - jest to funkcja gdzie wejściowymi jest dieta oraz konkretny dzień diety (dwójka `{week, day`}). Funkcja zwraca listę składników (wraz z podziałem na kategorie zakupowe), które trzeba zakupić danego dnia według reguły biznesowej 1.
 
+## Biznesowe ERD
+<img src="img/business-erd.svg" style="zoom:100%">
+
+## Koncepcyjne ERD
 <img src="img/conceptual-erd.svg" style="zoom:100%">
+
+## Wymagania danych
+Pytania pomocnicze:
+- **Jakich danych wymaga każda składowa rozwiązania? Jakie są ich źródła?**
+    - Rozwiązanie dzielimy na dwa moduły: Planowanie oraz Użytkowanie.
+    - Planowanie wymaga bazy składników, która jest provisonowana przez użytkownika, dań, które również tworzone są przez użytkonwnika oraz diety, która również tworzona jest przez użytkownika
+    - Użytkowanie musi wiedzieć, która dieta jest aktywna (tzn. w użyciu) oraz mapować dzisiejszą datę na odpowiedni dzień diety (odpowiednie sloty). Na tej podstawie moduł ustawia wskaźnik na odpowiednie sloty diety i generuje widoki posiłków oraz listy zakupów.
+- **Jakie dane, które powinny być trwale przechowywane, produkuje każda składowa?**
+    - Moduł planowania produkuje wszystkie dane (składniki, dania, diety, powiązanie daty z dniem diety).
+    - Moduł użytkownika nie produkuje danych, które są trwale przechowywane. (może ewentualnie w przyszłości oznaczać zapas stały jako brakujący).
+- **Jakie obiekty danych są wejściem lub wyjściem dla jednostek zewnętrznych w stosunku do rozwiązania? Za pomocą jakich mechanimzów dane będą odbierane i wysyłane?**
+    - Moduł planowania: system zewnętrzne: użytkownik: wyjście: składniki, dania, diety, powiązanie daty z dniem diety; wejście: export składników, dań, diety do pliku tekstowego (zrozumiałego np. dla ChataGPT).
+    - Moduł użytkownika: brak
+- **Jakie ograniczenia, reguły biznesowe lub zależności dotyczą każdego obiektu danych?**
+    - atrybuty wraz z enumami zostały opisane wyżej. Regułą biznesową na pewno jest derywacja posiłku Lunch na podstawie Post-Workout dnia poprzedniego.
+- **Który system lub proces jest "ownerem" dla każdego obiektu danych?**
+    - Ownerem wszystkich danych jest moduł planowania.
+- **Jakie informacje muszą być wprowadzone lub wyświetlane w interfejsie użytkownika?**
+    - Moduł planowania: Widok provisonowania składników, Widok tworzenia dań, Widok tworzenia diety.
+    - Moduł użytkowania: Widok dzisiaj zawierający dwie sekcje: posiłki oraz listy zakupów
+
+## CRUDCLUMT
+| Operacja        | Składnik                                                     | Danie                                                        | Dieta                                                        |
+| --------------- | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| **C**reate      | Planista provisonuje baze składników albo ręcznie albo przez bulk provisioning | Planista provisonuje baze dań (tylko ręcznie)                | Planista provisonuje baze diet (tylko ręcznie)               |
+| **R**ead        | Planista przegląda bazę składników lub rowija szczegóły dania | Planista przegląda baze dań lub sloty diety                  | Planista provisonuje baze diet, generowanie widoku "dzisiaj" |
+| **U**pdate      | Planista provisonuje baze składników                         | Planista provisonuje baze dań                                | Planista provisonuje baze diet                               |
+| **D**elete      | Planista provisonuje baze składników                         | Planista provisonuje baze dań                                | Planista provisonuje baze diet                               |
+| **C**opied      | Nigdy                                                        | Nigdy                                                        | Nigdy                                                        |
+| **L**ist        | Planista provisonuje baze składników                         | Planista provisonuje baze dań                                | Planista provisonuje baze diet                               |
+| **U**sed        | Liczenie kcal/makro dania                                    | Liczenie kcal/makro dnia lub tygodnia diety, generowanie widoku "dzisiaj" (zarówno posiłki jak i zakupy) | Generowanie widoku "dzisiaj"                                 |
+| **M**oved       | Nigdy                                                        | Nigdy                                                        | Nigdy                                                        |
+| **T**ransformed | Nigdy                                                        | Nigdy                                                        | Nigdy                                                        |
+
+# Atrybuty jakościowe
 
