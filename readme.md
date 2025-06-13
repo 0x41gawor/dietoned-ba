@@ -178,3 +178,17 @@ Pytania pomocnicze:
 
 # Atrybuty jakościowe
 
+| Atrybuty                 | Zewnętrzne                                                   | Atrybuty                       | Wewnętrzne                                                   |
+| ------------------------ | ------------------------------------------------------------ | ------------------------------ | ------------------------------------------------------------ |
+| **Dostępność**           | System dostępny jest w dowolnym momencie. Planowanie desktop, użytkowanie mobilnie (najlepiej z poziomu ikonki) | **Efektywność**                | Niekoniecznie, projekt i tak jest mały.                      |
+| **Możliwość instalacji** | Użytkownik nie musi nic instalować (chyba, że zdecyduje się na aplikacje mobilną do fazy użytkowania) | **Rozszerzalność**             | Zakładam, że baza pozostanie, ale projekt będzie dokładał jakieś małe ficzery (mikroelementy do składników, listy zakupów z check'iem, propozycje dań na niedziele) |
+| **Integralność**         | Dane powinny być sprawdzane pod względem duplikatów, powności enumów itp. | **Utrzymywalność**             | Jeśli projekt ma zostać ze mną na "całe życie" to maksujm to |
+| **Interoperacyjność**    | Brak integracji, moduł planowania umożliwia jedynie export do pliku diety w celu planowania wspólnie z czatem | **Modyfikowalność**            | j.w.                                                         |
+| **Wydajność**            | Renderowane strony web są lightweight, widok "dzisiaj" statyczny | **Przenośność**                | Zapewnione cloud-native                                      |
+| **Wytrzymałość**         | Obsługa błędów musi być                                      | **Możliwość ponownego użycia** | Tam gdzie możliwe, przenośność komponentów UI mile widziana  |
+| **Bezpieczeństwo**       | Brak danych poufnych, przeciwko ewentualnym DDoS'om na serwer można zabezpieczyć się backupem kodu (github) + backupem bazy (zrzut sql do replikacji, po planowaniu np.) | **Skalowalność**               | Możliwe, że znajomi będą chcieli też z tego korzystać. Zakładam skalowanie poprzez cloud-native |
+| **Użyteczność**          | UI powinna odzwierciedlić to co jest w Sheets/Notion, ale z natywnym wsparciem reguł biznesowych (np. wybieranie składników po nazwie wpisywanej z klawiatury itp.). Jeśli chodzi o kolory to telefon i tak mam czarno-biały. | **Weryfikowalność**            | Zakładam TDD                                                 |
+
+# Wymagania rozwiązania
+Na google sheets -> 
+# Prototypy
